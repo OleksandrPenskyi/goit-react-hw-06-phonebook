@@ -1,0 +1,42 @@
+.Form {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+
+  border: 1px solid black;
+}
+
+.Label {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.Input {
+  margin-bottom: 20px;
+
+  width: 50%;
+  border: 1px solid grey;
+  outline: none;
+  transition: all 150ms ease-in;
+}
+
+.Input:focus {
+  border: 1px solid #45d8e6;
+  border-radius: 5px;
+}
+
+.Btn {
+  padding: 5px;
+  width: 30%;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 200ms ease-in;
+}
+
+.Btn:hover {
+  border: 1px solid grey;
+  background: blue;
+  color: #fff;
+}

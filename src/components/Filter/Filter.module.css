@@ -1,0 +1,17 @@
+.Input {
+  margin-bottom: 5px;
+
+  width: 50%;
+  border: 1px solid grey;
+  outline: none;
+  transition: all 150ms ease-in;
+}
+
+.Input:focus {
+  border: 1px solid #45d8e6;
+  border-radius: 5px;
+}
+
+.Label {
+  margin-bottom: 5px;
+}
