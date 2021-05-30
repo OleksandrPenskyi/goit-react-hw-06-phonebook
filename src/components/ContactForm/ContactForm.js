@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import actions from '../../redux/contacts/contacts-actions';
 
 import styles from './ContactForm.module.css';
 
@@ -11,6 +13,13 @@ const INITIAL_STATE = {
 
 class ContactForm extends Component {
   static propTypes = {
+    contacts: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        number: PropTypes.string.isRequired,
+        id: PropTypes.string.isRequired,
+      }),
+    ).isRequired,
     addNewContact: PropTypes.func.isRequired,
   };
 
@@ -24,8 +33,28 @@ class ContactForm extends Component {
   onSubmitAddContact = event => {
     event.preventDefault();
 
-    this.props.addNewContact(this.state);
+    const { name, number } = this.state;
+    const newContact = {
+      id: uuidv4(),
+      name,
+      number,
+    };
+
+    // проверка на повтор имени в контактах
+    if (this.isRepeatedName(name)) {
+      alert(`${name} is already in contacts.`);
+      this.clearForm();
+      return;
+    }
+
+    this.props.addNewContact(newContact);
     this.clearForm();
+  };
+
+  isRepeatedName = name => {
+    return this.props.contacts
+      .map(contact => contact.name.toLowerCase())
+      .includes(name.toLowerCase());
   };
 
   clearForm = () => {
@@ -78,4 +107,12 @@ class ContactForm extends Component {
   }
 }
 
-export default ContactForm;
+const mapStateToProps = state => ({
+  contacts: state.contacts.items,
+});
+
+const mapDispatchToProps = dispatch => ({
+  addNewContact: newContact => dispatch(actions.addContact(newContact)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
